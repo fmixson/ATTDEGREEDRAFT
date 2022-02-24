@@ -86,17 +86,19 @@ for plan in GePlans:
                        major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1,
                        major4='ListC', major4_units=3, major4_disciplines=1, major4_courses=1)
 
-        major_progress(degree_applicable_courses=StudentInfo.completed_courses, major_name="English for Transfer-AAT",
+        major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
+                        major_name="English for Transfer-AAT",
                         major_course_requirements='AAT_English.csv',
                         major1='Core', major1_units=3, major1_disciplines=1, major1_courses=1,
                         major2='ListA', major2_units=6, major2_disciplines=1, major2_courses=2,
                         major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=1,
                         major4='ListC', major4_units=3, major4_disciplines=1, major4_courses=1)
 
-        major_progress(degree_applicable_courses=StudentInfo.completed_courses, major_name="Spanish for Transfer-AAT",
-                     major_course_requirements='AAT_Spanish.csv',
-                     major1='Core', major1_units=19, major1_disciplines=1,
-                     major2='ListA', major2_units=3, major2_disciplines=1)
+        major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
+                        major_name="Spanish for Transfer-AAT",
+                        major_course_requirements='AAT_Spanish.csv',
+                        major1='Core', major1_units=19, major1_disciplines=1, major1_courses=1,
+                        major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=2)
 
 
 
