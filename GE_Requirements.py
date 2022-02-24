@@ -24,6 +24,7 @@ class GeRequirements:
                             self.completed_ge_units.append(self.degree_applicable_dict[key])
                             ge_units_total = sum(d['units'] for d in self.completed_ge_courses.values()if d)
                             self.ge_course_list = [d['course'] for d in self.completed_ge_courses.values() if d]
+        # print('ge', self.completed_ge_courses)
         return self.completed_ge_courses
 
 

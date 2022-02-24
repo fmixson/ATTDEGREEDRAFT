@@ -44,5 +44,5 @@ class StudentInfo:
                                 except:
                                     continue
 
-        print('id', self.student_id, self.degree_applicable_dict)
+        # print('id', self.student_id, self.degree_applicable_dict)
         return self.degree_applicable_dict
