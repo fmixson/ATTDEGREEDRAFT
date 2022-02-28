@@ -11,7 +11,7 @@ from Major_Progress import MajorProgress
 from Degree_Completion_Report import DegreeCompletionReport
 
 
-def ge_progess(student_id, enrollment_history_df, ge_plan, ge_plan_list, **kwargs):
+def ge_progess(student_id, enrollment_history_df, ge_plan, ge_plan_list):
     sinfo = StudentInfo(student_id=id, enrollment_history_df=enrollment_history_df)
     degree_applicable_courses = sinfo.completed_courses()
     current_courses = crsinfo.current_courses()
@@ -24,12 +24,17 @@ def ge_progess(student_id, enrollment_history_df, ge_plan, ge_plan_list, **kwarg
             socbeh.ge_courses_completed(area_name=area, ge_courses_completed=ge_courses_completed)
         else:
             ge_courses_completed = gereq.ge_courses_completed(area_name=area, ge_dataframe=ge_dataframe)
+            print('ge main', ge_courses_completed)
     missing_ge_courses = gereq.ge_requirements_completed(ge_plan_list)
+    return ge_courses_completed, degree_applicable_courses
+
 
 def major_progress(degree_applicable_courses, ge_courses_completed, **kwargs):
-    if len(kwargs) == 14:
+    print(len(kwargs))
+    print(kwargs['major_name'])
+    if len(kwargs) == 18:
         major = MajorRequirements(degree_applicable_courses=degree_applicable_courses, completed_ge_courses=ge_courses_completed,
-                                   major_name=kwargs['major_name'], major_requirements=kwargs['major_requirements'])
+                                   major_name=kwargs['major_name'], major_requirements=kwargs['major_course_requirements'])
         major_dataframe = major.construct_major_dataframe()
         major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major1'], total_units=kwargs['major1_units'],
                                       number_of_disciplines=kwargs['major1_disciplines'])
@@ -71,16 +76,19 @@ for plan in GePlans:
         catalog_term = crsinfo.calculate_catalog_term()
         if plan == 'PlanB':
             if catalog_term >= 1219:
-                ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanB_GE_2021.csv', ge_plan_list=Plan_B_list_21, )
+                ge_courses_completed, degree_applicable_courses=ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanB_GE_2021.csv',
+                                                ge_plan_list=Plan_B_list_21, )
             else:
-                ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanB_GE.csv',
+                ge_courses_completed, degree_applicable_courses=ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanB_GE.csv',
                            ge_plan_list=Plan_B_list)
 
         else:
-            ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanC_GE.csv', ge_plan_list=Plan_C_list)
+            ge_courses_completed, degree_applicable_courses=ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanC_GE.csv',
+                                            ge_plan_list=Plan_C_list)
 
-        major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
-                       major_name="Comm Studies for Transfer-AAT", major_course_requirements='AAT_COMM.csv',
+        major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
+                       major_name="Comm Studies for Transfer-AAT",
+                       major_course_requirements='AAT_COMM.csv',
                        major1='Core', major1_units=3, major1_disciplines=1, major1_courses=1,
                        major2='ListA', major2_units=6, major2_disciplines=1, major2_courses=2,
                        major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1,
@@ -97,9 +105,15 @@ for plan in GePlans:
         major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
                         major_name="Spanish for Transfer-AAT",
                         major_course_requirements='AAT_Spanish.csv',
-                        major1='Core', major1_units=19, major1_disciplines=1, major1_courses=1,
-                        major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=2)
+                        major1='Core', major1_units=19, major1_disciplines=1, major1_courses=5,
+                        major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1)
 
+        # major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
+        #                 major_name="Business Administration-AST",
+        #                 major_course_requirements='AAT_BusAdmin.csv',
+        #                 major1='Core', major1_units=15, major1_disciplines=1, major1_courses=5,
+        #                 major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
+        #                 major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=2)
 
 
 

@@ -11,6 +11,7 @@ class MajorRequirements:
         self.completed_ge_courses = completed_ge_courses
         self.major_requirements = major_requirements
         self.major_name = major_name
+        self.major_num_of_units_dict = {}
         self.major_course_dict = {}
         self.major_courses_list = []
         self.major_courses_list2 = []
@@ -79,14 +80,14 @@ class MajorRequirements:
                 total_units = 6
             elif area_name == "ListB":
                 total_units = 3
-
+        print('area_name', area_name)
         self.major_num_of_units_dict[area_name] = total_units
 
         disc = False
         self.discipline_list = []
         self.discipline_set = set()
 
-
+        print('compl ge course', self.completed_ge_courses)
         for key in self.completed_ge_courses:
             if key not in proficiency_list:
                 ge_course_list.append(self.completed_ge_courses[key])
@@ -96,6 +97,7 @@ class MajorRequirements:
             major_course = False
 
             if total_area_units < total_units:
+                print('deg app courses', self.degree_applicable_courses)
                 for course_key in self.degree_applicable_courses:
 
                     if course_key == major_dataframe.loc[i, area_name]:
