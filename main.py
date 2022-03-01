@@ -37,13 +37,13 @@ def major_progress(degree_applicable_courses, ge_courses_completed, **kwargs):
                                    major_name=kwargs['major_name'], major_requirements=kwargs['major_course_requirements'])
         major_dataframe = major.construct_major_dataframe()
         major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major1'], total_units=kwargs['major1_units'],
-                                      number_of_disciplines=kwargs['major1_disciplines'])
+                                      number_of_disciplines=kwargs['major1_disciplines'], number_of_courses=kwargs['major1_courses'])
         major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major2'], total_units=kwargs['major2_units'],
-                                      number_of_disciplines=kwargs['major2_disciplines'])
+                                      number_of_disciplines=kwargs['major2_disciplines'], number_of_courses=kwargs['major2_courses'])
         major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major3'], total_units=kwargs['major3_units'],
-                                      number_of_disciplines=kwargs['major3_disciplines'])
+                                      number_of_disciplines=kwargs['major3_disciplines'], number_of_courses=kwargs['major3_courses'])
         major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major4'], total_units=kwargs['major4_units'],
-                                      number_of_disciplines=kwargs['major4_disciplines'])
+                                      number_of_disciplines=kwargs['major4_disciplines'], number_of_courses=kwargs['major4_courses'])
 
         majorProgress = MajorProgress(major_course_dict=major.major_course_dict,
                                  major_units_required=major.major_num_of_units_dict,
@@ -52,6 +52,7 @@ def major_progress(degree_applicable_courses, ge_courses_completed, **kwargs):
 
         missing_course_dict = majorProgress.major_num_of_courses()
         missing_units_dict = majorProgress.major_num_of_units()
+
 
 
 
@@ -94,7 +95,7 @@ for plan in GePlans:
                        major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1,
                        major4='ListC', major4_units=3, major4_disciplines=1, major4_courses=1)
 
-        major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
+        major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                         major_name="English for Transfer-AAT",
                         major_course_requirements='AAT_English.csv',
                         major1='Core', major1_units=3, major1_disciplines=1, major1_courses=1,
@@ -102,7 +103,7 @@ for plan in GePlans:
                         major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=1,
                         major4='ListC', major4_units=3, major4_disciplines=1, major4_courses=1)
 
-        major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
+        major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                         major_name="Spanish for Transfer-AAT",
                         major_course_requirements='AAT_Spanish.csv',
                         major1='Core', major1_units=19, major1_disciplines=1, major1_courses=5,

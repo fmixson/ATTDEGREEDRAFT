@@ -12,6 +12,7 @@ class MajorRequirements:
         self.major_requirements = major_requirements
         self.major_name = major_name
         self.major_num_of_units_dict = {}
+        self.major_num_of_courses_dict = {}
         self.major_course_dict = {}
         self.major_courses_list = []
         self.major_courses_list2 = []
@@ -60,7 +61,7 @@ class MajorRequirements:
             self.discipline_list.append(discipline)
         return disc
 
-    def major_requirements_completed(self, major_dataframe, area_name, total_units, number_of_disciplines=1):
+    def major_requirements_completed(self, major_dataframe, area_name, total_units, number_of_disciplines=1, number_of_courses=1):
         proficiency_list = ['Writing_Proficiency', 'Math_Proficiency', 'Health_Proficiency', 'Reading_Proficiency']
         self.major_courses_list2 = []
         total_area_units = 0
@@ -82,7 +83,8 @@ class MajorRequirements:
                 total_units = 3
         print('area_name', area_name)
         self.major_num_of_units_dict[area_name] = total_units
-
+        self.major_num_of_courses_dict[area_name] = number_of_courses
+        print('maj num crs', self.major_num_of_courses_dict)
         disc = False
         self.discipline_list = []
         self.discipline_set = set()
