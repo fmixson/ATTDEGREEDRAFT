@@ -45,13 +45,12 @@ def major_progress(degree_applicable_courses, ge_courses_completed, **kwargs):
         major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major4'], total_units=kwargs['major4_units'],
                                       number_of_disciplines=kwargs['major4_disciplines'], number_of_courses=kwargs['major4_courses'])
 
-        majorProgress = MajorProgress(major_course_dict=major.major_course_dict,
+        major = MajorProgress(major_course_dict=major.major_course_dict,
                                  major_units_required=major.major_num_of_units_dict,
                                  area_units=major.area_units_dict,
                                  num_of_courses_required=major.major_num_of_courses_dict)
-
-        missing_course_dict = majorProgress.major_num_of_courses()
-        missing_units_dict = majorProgress.major_num_of_units()
+        missing_course_dict = major.major_num_of_courses()
+        missing_units_dict = major.major_num_of_units()
 
 
 
@@ -87,7 +86,7 @@ for plan in GePlans:
             ge_courses_completed, degree_applicable_courses=ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanC_GE.csv',
                                             ge_plan_list=Plan_C_list)
 
-        major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
+        major = major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                        major_name="Comm Studies for Transfer-AAT",
                        major_course_requirements='AAT_COMM.csv',
                        major1='Core', major1_units=3, major1_disciplines=1, major1_courses=1,
@@ -106,8 +105,12 @@ for plan in GePlans:
         major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                         major_name="Spanish for Transfer-AAT",
                         major_course_requirements='AAT_Spanish.csv',
-                        major1='Core', major1_units=19, major1_disciplines=1, major1_courses=5,
+                        major1='Core', major1_units=19, major1_disciplines=1, major1_courses=4,
                         major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1)
+
+        DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
+        DegreeCompletionReport.LS_AA_Degrees_df.to_csv(
+            'C:/Users/fmixson/Desktop/AAT_LA_Division_Degrees.csv')
 
         # major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
         #                 major_name="Business Administration-AST",
