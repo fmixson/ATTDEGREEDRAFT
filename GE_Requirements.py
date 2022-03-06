@@ -9,6 +9,7 @@ class GeRequirements:
         self.completed_ge_courses = {}
         self.completed_ge_units = []
         self.ge_course_list = []
+        self.missing_ge_courses = []
 
     def construct_ge_dataframe(self):
         ge_dataframe = pd.read_csv(self.ge_plan)
@@ -29,8 +30,8 @@ class GeRequirements:
 
 
     def ge_requirements_completed(self, ge_plan_list):
-        missing_ge_courses = []
+
         for area in ge_plan_list:
             if area not in self.completed_ge_courses:
-                missing_ge_courses.append(area)
-        return missing_ge_courses
+                self.missing_ge_courses.append(area)
+        return self.missing_ge_courses
