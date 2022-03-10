@@ -62,8 +62,8 @@ def degree_report(id, first_term, major_name, completed_ge, area_units_dict, mis
     report.degree_completion()
 
 
-Plan_B_list = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts', 'Hum', 'Arts_Hum',
-               'Amer_Hist', 'Amer_Gov', 'Institutions', 'Self_Dev']
+Plan_B_list = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts', 'Amer_Hist','Hum', 'Arts_Hum',
+                'Amer_Gov', 'Institutions', 'Self_Dev']
 Plan_B_list_21 = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts', 'Amer_Hist_Gov', 'Hum', 'Arts_Hum',
                   'Institutions', 'Self_Dev', 'Ethnic_Stds']
 Plan_C_list = ['Comp', 'Crit_Think', 'Oral_Comm', 'Math', 'Arts', 'Hum', 'Arts_Hum', 'Soc_Behav1', 'Soc_Behav2', 'Soc_Behav3',
