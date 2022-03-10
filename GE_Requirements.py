@@ -1,6 +1,8 @@
 import pandas as pd
 
 class GeRequirements:
+    proficiencies = ['Math_Proficiency', 'Writing_Proficiency', 'Health_Proficiency', 'Reading Proficiency',
+                     'Phys_Sci','Bio_Sci']
 
 
     def __init__(self, degree_applicable_dict, ge_plan):

@@ -42,7 +42,7 @@ def major_progress(degree_applicable_courses, ge_courses_completed, **kwargs):
                                       number_of_disciplines=kwargs['major2_disciplines'], number_of_courses=kwargs['major2_courses'])
         major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major3'], total_units=kwargs['major3_units'],
                                       number_of_disciplines=kwargs['major3_disciplines'], number_of_courses=kwargs['major3_courses'])
-        major_course_dict=major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major4'], total_units=kwargs['major4_units'],
+        area_units_dict,major_course_dict=major.major_requirements_completed(major_dataframe=major_dataframe, area_name=kwargs['major4'], total_units=kwargs['major4_units'],
                                       number_of_disciplines=kwargs['major4_disciplines'], number_of_courses=kwargs['major4_courses'])
 
         major = MajorProgress(major_course_dict=major.major_course_dict,
@@ -51,19 +51,21 @@ def major_progress(degree_applicable_courses, ge_courses_completed, **kwargs):
                                  num_of_courses_required=major.major_num_of_courses_dict)
         missing_course_dict = major.major_num_of_courses()
         missing_units_dict = major.major_num_of_units()
-        return missing_course_dict, missing_units_dict, major_course_dict
+        return missing_course_dict, missing_units_dict, major_course_dict, area_units_dict
 
-def degree_report(id, first_term, major_name):
+def degree_report(id, first_term, major_name, completed_ge, area_units_dict, missing_units, missing_ge, missing_major,
+                  major_courses, enrolled_courses):
     # , first_term, major_name, missing_ge, completed_ge, major_courses, major_requirements):
-    report = DegreeCompletionReport(id, first_term, major_name)
+    report = DegreeCompletionReport(id, first_term, major_name, completed_ge, area_units_dict, missing_units, missing_ge,
+                                    missing_major, major_courses, enrolled_courses)
     # , first_term, major_name, completed_ge,missing_ge,major_courses, major_requirements)
     report.degree_completion()
 
 
 Plan_B_list = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts', 'Hum', 'Arts_Hum',
                'Amer_Hist', 'Amer_Gov', 'Institutions', 'Self_Dev']
-Plan_B_list_21 = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts', 'Hum', 'Arts_Hum',
-               'Amer_Hist_Gov', 'Institutions', 'Self_Dev', 'Ethnic_Stds']
+Plan_B_list_21 = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts', 'Amer_Hist_Gov', 'Hum', 'Arts_Hum',
+                  'Institutions', 'Self_Dev', 'Ethnic_Stds']
 Plan_C_list = ['Comp', 'Crit_Think', 'Oral_Comm', 'Math', 'Arts', 'Hum', 'Arts_Hum', 'Soc_Behav1', 'Soc_Behav2', 'Soc_Behav3',
                'Phys_Sci', 'Bio_Sci', 'Sci_Labs']
 
@@ -77,8 +79,10 @@ GePlans = ['PlanB', 'PlanC']
 for plan in GePlans:
     for id in student_ids_list:
         crsinfo = CourseInfo(student_id=id, enrollment_history_df=enrollment_history_df)
+        enrolled_courses=crsinfo.current_courses()
         semester = crsinfo.first_term()
         catalog_term = crsinfo.calculate_catalog_term()
+
         if plan == 'PlanB':
             if catalog_term >= 1219:
                 ge_courses_completed, degree_applicable_courses, missing_ge_courses=ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanB_GE_2021.csv',
@@ -91,7 +95,7 @@ for plan in GePlans:
             ge_courses_completed, degree_applicable_courses, missing_ge_courses=ge_progess(student_id=id, enrollment_history_df=enrollment_history_df, ge_plan='PlanC_GE.csv',
                                             ge_plan_list=Plan_C_list)
 
-        major_course_dict=major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict=major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                        major_name="Comm Studies for Transfer-AAT",
                        major_course_requirements='AAT_COMM.csv',
                        major1='Core', major1_units=3, major1_disciplines=1, major1_courses=1,
@@ -99,7 +103,9 @@ for plan in GePlans:
                        major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1,
                        major4='ListC', major4_units=3, major4_disciplines=1, major4_courses=1)
 
-        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Comm Studies for Transfer-AAT")
+        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Comm Studies for Transfer-AAT", completed_ge=ge_courses_completed,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict, enrolled_courses=enrolled_courses)
             # , first_term=CourseInfo.first_term, major_name="Comm Studies for Transfer-AAT", missing_ge=missing_ge_courses,
             #           major_courses=major_course_dict, completed_ge=ge_courses_completed,
             #           major_requirements=MajorRequirements.major_requirements_completed)
@@ -112,11 +118,23 @@ for plan in GePlans:
                         major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=1,
                         major4='ListC', major4_units=3, major4_disciplines=1, major4_courses=1)
 
+        degree_report(id=id, first_term=CourseInfo.first_term, major_name="English for Transfer-AAT",
+                      completed_ge=ge_courses_completed,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses)
+
         major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                         major_name="Spanish for Transfer-AAT",
                         major_course_requirements='AAT_Spanish.csv',
                         major1='Core', major1_units=19, major1_disciplines=1, major1_courses=4,
                         major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1)
+
+        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Spanish for Transfer-AAT",
+                      completed_ge=ge_courses_completed,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses)
 
         DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
         DegreeCompletionReport.LS_AA_Degrees_df.to_csv(
