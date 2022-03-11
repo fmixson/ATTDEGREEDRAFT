@@ -151,7 +151,7 @@ for plan in GePlans:
 
         major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                        major_name="Psychology for Transfer-AAT",
-                       major_course_requirements='AAT_Psychology.csv',
+                       major_course_requirements="AAT_Psychology.csv",
                        major1='Core', major1_units=11, major1_disciplines=1, major1_courses=3,
                        major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
                        major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1,
