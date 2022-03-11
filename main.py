@@ -136,26 +136,26 @@ for plan in GePlans:
                       missing_major=missing_course_dict, major_courses=major_course_dict,
                       enrolled_courses=enrolled_courses)
 
-        major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
-                        major_name="Business Administration-AST",
-                        major_course_requirements='AAT_BusAdmin.csv',
-                        major1='Core', major1_units=15, major1_disciplines=1, major1_courses=5,
-                        major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
-                        major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=2)
-
-        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Business Administration-AST",
-                      completed_ge=ge_courses_completed,
-                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
-                      missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
-
-        major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
-                       major_name="Psychology for Transfer-AAT",
-                       major_course_requirements="AAT_Psychology.csv",
-                       major1='Core', major1_units=11, major1_disciplines=1, major1_courses=3,
-                       major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
-                       major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1,
-                       major4='ListC', major4_units=3, major4_disciplines=1, major4_courses=1)
+        # major_progress(degree_applicable_courses=StudentInfo.completed_courses, ge_courses_completed=GeRequirements.ge_courses_completed,
+        #                 major_name="Business Administration-AST",
+        #                 major_course_requirements='AAT_BusAdmin.csv',
+        #                 major1='Core', major1_units=15, major1_disciplines=1, major1_courses=5,
+        #                 major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
+        #                 major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=2)
+        #
+        # degree_report(id=id, first_term=CourseInfo.first_term, major_name="Business Administration-AST",
+        #               completed_ge=ge_courses_completed,
+        #               area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+        #               missing_major=missing_course_dict, major_courses=major_course_dict,
+        #               enrolled_courses=enrolled_courses)
+        #
+        # major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
+        #                major_name="Psychology for Transfer-AAT",
+        #                major_course_requirements="AAT_Psychology.csv",
+        #                major1='Core', major1_units=11, major1_disciplines=1, major1_courses=3,
+        #                major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
+        #                major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1,
+        #                major4='ListC', major4_units=3, major4_disciplines=1, major4_courses=1)
 
         DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
         DegreeCompletionReport.LS_AA_Degrees_df.to_csv(

@@ -81,10 +81,10 @@ class MajorRequirements:
                 total_units = 6
             elif area_name == "ListB":
                 total_units = 3
-        print('area_name', area_name)
+        # print('area_name', area_name)
         self.major_num_of_units_dict[area_name] = total_units
         self.major_num_of_courses_dict[area_name] = number_of_courses
-        print('maj num crs', self.major_num_of_courses_dict)
+        # print('maj num crs', self.major_num_of_courses_dict)
         disc = False
         self.discipline_list = []
         self.discipline_set = set()
@@ -99,7 +99,7 @@ class MajorRequirements:
             major_course = False
 
             if total_area_units < total_units:
-                print('deg app courses', self.degree_applicable_courses)
+                # print('deg app courses', self.degree_applicable_courses)
                 for course_key in self.degree_applicable_courses:
 
                     if course_key == major_dataframe.loc[i, area_name]:
@@ -127,10 +127,10 @@ class MajorRequirements:
                                 area_units_list.append(self.degree_applicable_courses[course_key]['units'])
                                 if not ge_course:
                                     self.major_units_list.append(self.degree_applicable_courses[course_key]['units'])
-            print('area units', area_units_list)
+            # print('area units', area_units_list)
             total_area_units = sum(area_units_list)
             self.area_units_dict[area_name] = total_area_units
-            print('area dict', self.area_units_dict)
+            # print('area dict', self.area_units_dict)
 
         return self.area_units_dict, self.major_course_dict
 
