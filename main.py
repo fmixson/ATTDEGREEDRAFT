@@ -248,6 +248,21 @@ for plan in GePlans:
                       missing_major=missing_course_dict, major_courses=major_course_dict,
                       enrolled_courses=enrolled_courses)
 
+        major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
+                       major_name="Sociology for Transfer-AAT",
+                       major_course_requirements="AAT_Sociology.csv",
+                       major1='Core1', major1_units=3, major1_disciplines=1, major1_courses=1,
+                       major2='Core2', major2_units=6, major2_disciplines=1, major2_courses=2,
+                       major3='ListA', major3_units=6, major3_disciplines=1, major3_courses=2,
+                       major4='ListB', major4_units=3, major4_disciplines=1, major4_courses=1)
+
+        degree_report(id=id, first_term=CourseInfo.first_term,
+                      major_name="Psychology for Transfer-AAT",
+                      completed_ge=ge_courses_completed,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses)
+
     DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
     DegreeCompletionReport.LS_AA_Degrees_df.to_csv(
         'C:/Users/fmixson/Desktop/AAT_LA_Division_Degrees.csv')

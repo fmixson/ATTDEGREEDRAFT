@@ -129,7 +129,7 @@ class MajorRequirements:
                                 area_units_list.append(self.degree_applicable_courses[course_key]['units'])
                                 if not ge_course:
                                     self.major_units_list.append(self.degree_applicable_courses[course_key]['units'])
-                                continue
+
             # print('area units', area_units_list)
             total_area_units = sum(area_units_list)
             self.area_units_dict[area_name] = total_area_units
