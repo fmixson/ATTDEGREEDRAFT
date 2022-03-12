@@ -89,7 +89,7 @@ class MajorRequirements:
         self.discipline_list = []
         self.discipline_set = set()
 
-        print('compl ge course', self.completed_ge_courses)
+        # print('compl ge course', self.completed_ge_courses)
         for key in self.completed_ge_courses:
             if key not in proficiency_list:
                 ge_course_list.append(self.completed_ge_courses[key])
@@ -123,14 +123,19 @@ class MajorRequirements:
                                 self.area_units_dict[area_name] = self.degree_applicable_courses[course_key]
                                 self.major_courses_list.append(course_key)
                                 self.major_courses_list2.append(course_key)
+                                if 'Major Courses' in self.major_course_dict:
+                                    self.major_course_dict.pop('Major Courses', None)
                                 self.major_course_dict[area_name] = self.major_courses_list2
                                 area_units_list.append(self.degree_applicable_courses[course_key]['units'])
                                 if not ge_course:
                                     self.major_units_list.append(self.degree_applicable_courses[course_key]['units'])
+                                continue
             # print('area units', area_units_list)
             total_area_units = sum(area_units_list)
             self.area_units_dict[area_name] = total_area_units
-            # print('area dict', self.area_units_dict)
+            # print('inside method', course_key, type(self.major_course_dict), type(self.area_units_dict))
+        if len(self.major_course_dict) == 0:
+            self.major_course_dict['Major Courses'] = 0
 
         return self.area_units_dict, self.major_course_dict
 

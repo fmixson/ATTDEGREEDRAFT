@@ -81,7 +81,8 @@ class DegreeCompletionReport:
 
         total_missing = len(self.missing_ge) + missing_major_courses
         DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Total_Missing'] = total_missing
-        print('length', length)
+        # print('length', length)
+        # print(DegreeCompletionReport.LS_AA_Degrees_df)
         return length, missing_major_courses
 
 
