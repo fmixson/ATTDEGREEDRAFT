@@ -117,12 +117,11 @@ def major_progress(degree_applicable_courses, ge_courses_completed, **kwargs):
 
 
 def degree_report(id, first_term, major_name, completed_ge, area_units_dict, missing_units, missing_ge, missing_major,
-                  major_courses, enrolled_courses):
+                  major_courses, enrolled_courses, degree_applicable_courses, catalog_term):
     print('major course in degree report function', id, major_courses)
     # , first_term, major_name, missing_ge, completed_ge, major_courses, major_requirements):
-    report = DegreeCompletionReport(id, first_term, major_name, completed_ge, area_units_dict, missing_units,
-                                    missing_ge,
-                                    missing_major, major_courses, enrolled_courses)
+    report = DegreeCompletionReport(id, first_term, major_name, completed_ge, area_units_dict, missing_units, missing_ge,
+                                    missing_major, major_courses, enrolled_courses, degree_applicable_courses, catalog_term)
     # , first_term, major_name, completed_ge,missing_ge,major_courses, major_requirements)
     report.degree_completion()
 
@@ -183,7 +182,8 @@ for plan in GePlans:
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term)
 
         print('major dict in main', major_course_dict)
 
@@ -202,7 +202,8 @@ for plan in GePlans:
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
+                      enrolled_courses=enrolled_courses,degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term)
 
         missing_course_dict, missing_units_dict, major_course_dict, area_units_dict = major_progress(
             degree_applicable_courses=degree_applicable_courses,
@@ -217,7 +218,8 @@ for plan in GePlans:
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term)
 
         missing_course_dict, missing_units_dict, major_course_dict, area_units_dict =major_progress(degree_applicable_courses=degree_applicable_courses,
                        ge_courses_completed=ge_courses_completed,
@@ -231,7 +233,8 @@ for plan in GePlans:
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term)
         #
         missing_course_dict, missing_units_dict, major_course_dict, area_units_dict =major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                        major_name="Psychology for Transfer-AAT",
@@ -246,7 +249,8 @@ for plan in GePlans:
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term)
 
         missing_course_dict, missing_units_dict, major_course_dict, area_units_dict =major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                        major_name="Sociology for Transfer-AAT",
@@ -261,7 +265,8 @@ for plan in GePlans:
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term)
 
         missing_course_dict, missing_units_dict, major_course_dict, area_units_dict =major_progress(
                         degree_applicable_courses=degree_applicable_courses,
@@ -277,7 +282,8 @@ for plan in GePlans:
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term)
 
         missing_course_dict, missing_units_dict, major_course_dict, area_units_dict = major_progress(
             degree_applicable_courses=degree_applicable_courses,
@@ -292,7 +298,8 @@ for plan in GePlans:
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
-                      enrolled_courses=enrolled_courses)
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term)
 
     DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
     DegreeCompletionReport.LS_AA_Degrees_df.to_csv(
