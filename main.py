@@ -219,7 +219,7 @@ for plan in GePlans:
                       missing_major=missing_course_dict, major_courses=major_course_dict,
                       enrolled_courses=enrolled_courses)
 
-        major_progress(degree_applicable_courses=ge_courses_completed,
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict =major_progress(degree_applicable_courses=degree_applicable_courses,
                        ge_courses_completed=ge_courses_completed,
                         major_name="Business Administration-AST",
                         major_course_requirements='AAT_BusAdmin.csv',
@@ -233,7 +233,7 @@ for plan in GePlans:
                       missing_major=missing_course_dict, major_courses=major_course_dict,
                       enrolled_courses=enrolled_courses)
         #
-        major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict =major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                        major_name="Psychology for Transfer-AAT",
                        major_course_requirements="AAT_Psychology.csv",
                        major1='Core', major1_units=11, major1_disciplines=1, major1_courses=3,
@@ -248,7 +248,7 @@ for plan in GePlans:
                       missing_major=missing_course_dict, major_courses=major_course_dict,
                       enrolled_courses=enrolled_courses)
 
-        major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict =major_progress(degree_applicable_courses=degree_applicable_courses, ge_courses_completed=ge_courses_completed,
                        major_name="Sociology for Transfer-AAT",
                        major_course_requirements="AAT_Sociology.csv",
                        major1='Core1', major1_units=3, major1_disciplines=1, major1_courses=1,
@@ -257,7 +257,38 @@ for plan in GePlans:
                        major4='ListB', major4_units=3, major4_disciplines=1, major4_courses=1)
 
         degree_report(id=id, first_term=CourseInfo.first_term,
-                      major_name="Psychology for Transfer-AAT",
+                      major_name="Sociology for Transfer-AAT",
+                      completed_ge=ge_courses_completed,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses)
+
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict =major_progress(
+                        degree_applicable_courses=degree_applicable_courses,
+                        ge_courses_completed=ge_courses_completed,
+                       major_name="Administration of Justice for Transfer-AAT",
+                       major_course_requirements="AAT_AdminJust.csv",
+                       major1='Core', major1_units=6, major1_disciplines=1, major1_courses=2,
+                       major2='ListA', major2_units=6, major2_disciplines=1, major2_courses=2,
+                       major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=2)
+
+        degree_report(id=id, first_term=CourseInfo.first_term,
+                      major_name="Administration of Justice for Transfer-AAT",
+                      completed_ge=ge_courses_completed,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses)
+
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict = major_progress(
+            degree_applicable_courses=degree_applicable_courses,
+            ge_courses_completed=ge_courses_completed,
+            major_name="Elementary Teacher Education-AAT",
+            major_course_requirements='AAT_TeacherEd.csv',
+            major1='Core', major1_units=42, major1_disciplines=1, major1_courses=13,
+            major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
+            major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1)
+
+        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Elementary Teacher Education-AAT",
                       completed_ge=ge_courses_completed,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
