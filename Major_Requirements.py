@@ -92,7 +92,7 @@ class MajorRequirements:
         # print('compl ge course', self.completed_ge_courses)
         for key in self.completed_ge_courses:
             if key not in proficiency_list:
-                ge_course_list.append(self.completed_ge_courses[key])
+                ge_course_list.append(self.completed_ge_courses[key]['course'])
 
         for i in range(len(major_dataframe[area_name])):
             ge_course = False
@@ -103,6 +103,8 @@ class MajorRequirements:
                 for course_key in self.degree_applicable_courses:
 
                     if course_key == major_dataframe.loc[i, area_name]:
+                        print('ck', course_key)
+                        print('ge list', ge_course_list)
                         if course_key in ge_course_list:
                             ge_course = True
 
@@ -129,14 +131,14 @@ class MajorRequirements:
                                 area_units_list.append(self.degree_applicable_courses[course_key]['units'])
                                 if not ge_course:
                                     self.major_units_list.append(self.degree_applicable_courses[course_key]['units'])
-
+                                    print('not in ge',self.major_units_list)
             # print('area units', area_units_list)
             total_area_units = sum(area_units_list)
             self.area_units_dict[area_name] = total_area_units
-            # print('inside method', course_key, type(self.major_course_dict), type(self.area_units_dict))
+        print('area unit dict', self.area_units_dict)
         if len(self.major_course_dict) == 0:
             self.major_course_dict['Major Courses'] = 0
-
-        return self.area_units_dict, self.major_course_dict
+        # print(self.area_units_dict, self.major_units_list)
+        return self.area_units_dict, self.major_course_dict, self.major_units_list
 
 

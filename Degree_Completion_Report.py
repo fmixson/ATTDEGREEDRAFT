@@ -5,16 +5,15 @@ from Major_Requirements import MajorRequirements
 
 
 class DegreeCompletionReport:
-    columns = ['Student_ID', 'Major', 'Total_Degree_Units','GE_Units', 'Total_Major_Units',
-               'Degree_Major_Units', 'Elective_Units', 'Total_Missing', 'GE_Missing', 'Major_Missing','Missing_GE_Courses',
-               'Missing_Major_Courses', 'GE_Courses', 'Major_Courses', 'Elective_Courses', 'Enrolled_Courses', 'Additional_Courses',
-               'First_Term','Catalog_Term', 'Passed_Courses']
+    columns = ['Student_ID', 'First_Term', 'Catalog_Term', 'Major', 'GE_Plan','Total_Degree_Units','GE_Units', 'Total_Major_Units',
+               'Degree_Major_Units', 'Elective_Units', 'Total_Missing', 'GE_Missing', 'Major_Missing', 'Missing_GE_Courses',
+               'Missing_Major_Courses', 'GE_Courses', 'Major_Courses', 'Elective_Courses', 'Enrolled_Courses', 'Passed_Courses']
     LS_AA_Degrees_df = pd.DataFrame(columns=columns)
     # degree_units_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
     # columns2 = ['Student_ID', 'Major', 'Degree_Units', 'GE_Courses', 'Major_Courses', 'Elective_Courses']
     # degree_courses_df = pd.DataFrame(columns=columns2)
 
-    def __init__(self, student_id, first_term, major_name, completed_ge_courses,area_units_dict, missing_units, missing_ge,
+    def __init__(self, student_id, first_term, major_name, geplan, completed_ge_courses, major_units, area_units_dict, missing_units, missing_ge,
                  missing_major, major_courses, enrolled_courses, degree_applicable_courses, catalog_term):
         # , major_requirements_dict, completed_ge_courses, major_course_dict,
         #          area_units_dict, student_major, elective_units, elective_courses,
@@ -33,6 +32,8 @@ class DegreeCompletionReport:
         self.enrolled_courses = enrolled_courses
         self.degree_applicable_courses = degree_applicable_courses
         self.catalog_term = catalog_term
+        self.geplan = geplan
+        self.major_units = major_units
 
 
 
@@ -48,16 +49,21 @@ class DegreeCompletionReport:
         DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'First_Term'] = self.first_term
         DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Catalog_Term'] = self.catalog_term
         DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Major'] = self.major_name
-        totalGEUnitsTest = sum(self.completed_ge_courses[x]['units'] for x in self.completed_ge_courses if x
-                               not in GeRequirements.proficiencies)
+        DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'GE_Plan'] = self.geplan
+        # totalGEUnitsTest = sum(self.completed_ge_courses[x]['units'] for x in self.completed_ge_courses if x
+        #                        not in GeRequirements.proficiencies)
         ge_units = sum(self.completed_ge_courses[x]['units'] for x in self.completed_ge_courses if x not in GeRequirements.proficiencies)
         DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'GE_Units'] = ge_units
-        major_units_total_value = sum(self.area_units_dict.values())
-        DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Total_Major_Units'] = major_units_total_value
+        print('major units before sum', self.major_units)
+        major_units = sum(self.major_units)
+        print('major units after sum', self.major_units)
+
+        DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Total_Major_Units'] = major_units
         missingUnits = sum(self.missing_units_dict.values())
-        DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Degree_Major_Units'] = missingUnits
+        degree_major_units = sum(self.area_units_dict.values())
+        DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Degree_Major_Units'] = degree_major_units
         # DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Elective_Units'] = sum(self.elective_units)
-        DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Total_Degree_Units'] = ge_units + missingUnits
+        DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Total_Degree_Units'] = ge_units + major_units
 
 
 
@@ -68,7 +74,7 @@ class DegreeCompletionReport:
         values = self.missing_units_dict.values()
         missing_major_units = sum(values)
         # DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Major_Missing_Units'] = missing_major_units
-
+        print('missing ge', self.missing_ge)
         DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Missing_GE_Courses'] = self.missing_ge
 
         missing_major_list = self.missing_major_courses.items()
@@ -84,7 +90,8 @@ class DegreeCompletionReport:
 
         total_missing = len(self.missing_ge) + missing_major_courses
         DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Total_Missing'] = total_missing
-        # DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Passed_Courses'] = self.degree_applicable_courses
+        passed_courses = self.degree_applicable_courses.items()
+        DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Passed_Courses'] = passed_courses
 
         # print('length', length)
         # print(DegreeCompletionReport.LS_AA_Degrees_df)
