@@ -12,7 +12,7 @@ from Degree_Completion_Report import DegreeCompletionReport
 
 
 def ge_progess(student_id, enrollment_history_df, ge_plan, ge_plan_list):
-    sinfo = StudentInfo(student_id=id, enrollment_history_df=enrollment_history_df)
+    sinfo = StudentInfo(student_id=student_id, enrollment_history_df=enrollment_history_df)
     degree_applicable_courses = sinfo.completed_courses()
     current_courses = crsinfo.current_courses()
     gereq = GeRequirements(degree_applicable_dict=degree_applicable_courses, ge_plan=ge_plan)
@@ -127,14 +127,11 @@ def degree_report(id, first_term, major_name, geplan, completed_ge, major_units,
 
 
 Plan_B_list = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts', 'Amer_Hist',
-               'Hum', 'Arts_Hum',
-               'Amer_Gov', 'Institutions', 'Self_Dev']
+               'Hum', 'Arts_Hum', 'Amer_Gov', 'Institutions', 'Self_Dev']
 Plan_B_list_21 = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts',
-                  'Amer_Hist_Gov', 'Hum', 'Arts_Hum',
-                  'Institutions', 'Self_Dev', 'Ethnic_Stds']
+                  'Amer_Hist_Gov', 'Hum', 'Arts_Hum', 'Institutions', 'Self_Dev', 'Ethnic_Stds']
 Plan_C_list = ['Comp', 'Crit_Think', 'Oral_Comm', 'Math', 'Arts', 'Hum', 'Arts_Hum', 'Soc_Behav1', 'Soc_Behav2',
-               'Soc_Behav3',
-               'Phys_Sci', 'Bio_Sci', 'Sci_Labs']
+               'Soc_Behav3', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs']
 
 enrollment_history_file = fileopenbox('Upload Enrollment Histories', filetypes='*.csv')
 e = EnrollmentHistoryDataFrame(enrollment_history_file=enrollment_history_file)
