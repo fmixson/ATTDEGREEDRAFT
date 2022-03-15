@@ -9,15 +9,10 @@ class DegreeCompletionReport:
                'Degree_Major_Units', 'Elective_Units', 'Total_Missing', 'GE_Missing', 'Major_Missing', 'Missing_GE_Courses',
                'Missing_Major_Courses', 'GE_Courses', 'Major_Courses', 'Elective_Courses', 'Enrolled_Courses', 'Passed_Courses']
     LS_AA_Degrees_df = pd.DataFrame(columns=columns)
-    # degree_units_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
-    # columns2 = ['Student_ID', 'Major', 'Degree_Units', 'GE_Courses', 'Major_Courses', 'Elective_Courses']
-    # degree_courses_df = pd.DataFrame(columns=columns2)
 
     def __init__(self, student_id, first_term, major_name, geplan, completed_ge_courses, major_units, area_units_dict, missing_units, missing_ge,
                  missing_major, major_courses, enrolled_courses, degree_applicable_courses, catalog_term):
-        # , major_requirements_dict, completed_ge_courses, major_course_dict,
-        #          area_units_dict, student_major, elective_units, elective_courses,
-        #          missing_ge, missing_major_courses, missing_units_dict, enrolled_courses, first_term):
+
         self.student_id = student_id
         self.first_term = first_term
         self.major_name = major_name
@@ -37,12 +32,8 @@ class DegreeCompletionReport:
 
 
 
-        # print('maj missing course dic', self.missing_major_courses)
-        # print('comp ge units', completed_ge_units)
-
     def degree_completion(self):
 
-        # length1 = len(DegreeCompletion.degree_units_df)
         length = len(DegreeCompletionReport.LS_AA_Degrees_df)
 
         DegreeCompletionReport.LS_AA_Degrees_df.loc[length, 'Student_ID'] = self.student_id
@@ -95,8 +86,47 @@ class DegreeCompletionReport:
 
         # print('length', length)
         # print(DegreeCompletionReport.LS_AA_Degrees_df)
-        return length, missing_major_courses
+        # print('inside deg com', DegreeCompletionReport.LS_AA_Degrees_df)
+        return DegreeCompletionReport.LS_AA_Degrees_df
 
+
+class DataframeFilter():
+    studentIDList = []
+    def __init__(self, degreeCompletionReport):
+        self.degreeCompletionReport = degreeCompletionReport
+
+
+    def build_student_list(self):
+        for i in range(len(self.degreeCompletionReport)):
+            if self.degreeCompletionReport.loc[i, 'Student_ID'] not in DataframeFilter.studentIDList:
+                DataframeFilter.studentIDList.append(self.degreeCompletionReport.loc[i, 'Student_ID'])
+        print('filter id list', DataframeFilter.studentIDList)
+        return DataframeFilter.studentIDList
+
+    def select_majors(self):
+
+
+        total_row_list=[]
+
+        for id in DataframeFilter.studentIDList:
+            missing_list = []
+            row_by_student_list = []
+            for i in range(len(self.degreeCompletionReport)):
+                if self.degreeCompletionReport.loc[i, 'Student_ID'] == id:
+                    print('len', len(row_by_student_list))
+                    if len(row_by_student_list)==0:
+                        missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                        row_by_student_list.append(i)
+                    else:
+                        if self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[0]:
+                            missing_list.clear()
+                            row_by_student_list.clear()
+                            missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                            row_by_student_list.append(i)
+                    print('id', id, row_by_student_list, missing_list)
+            total_row_list.append(row_by_student_list)
+            print('total', total_row_list)
+            return total_row_list
 
     # def degree_status(self, length, missing_major_courses):
     #     degree_status_ge = False

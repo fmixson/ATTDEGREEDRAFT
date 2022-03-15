@@ -8,7 +8,17 @@ from Social_Behavioral_Areas import SocialBehavAreas
 from Student_ID import StudentID
 from Major_Requirements import MajorRequirements
 from Major_Progress import MajorProgress
-from Degree_Completion_Report import DegreeCompletionReport
+from Degree_Completion_Report import DegreeCompletionReport, DataframeFilter
+
+
+class ATTReport(DegreeCompletionReport):
+
+    def dataframe_filter(self, degree_report, student_ids_list):
+        for i in range(len(degree_report)):
+            for id in student_ids_list:
+                if degree_report.loc[i, 'ID'] == id:
+                    print(id)
+
 
 
 def ge_progess(student_id, enrollment_history_df, ge_plan, ge_plan_list):
@@ -123,7 +133,8 @@ def degree_report(id, first_term, major_name, geplan, completed_ge, major_units,
     report = DegreeCompletionReport(id, first_term, major_name, geplan, completed_ge, major_units, area_units_dict, missing_units, missing_ge,
                                     missing_major, major_courses, enrolled_courses, degree_applicable_courses, catalog_term)
     # , first_term, major_name, completed_ge,missing_ge,major_courses, major_requirements)
-    report.degree_completion()
+    degreeCompletionReport=report.degree_completion()
+    return degreeCompletionReport
 
 
 Plan_B_list = ['Oral_Comm', 'Writ_Comm', 'Crit_Think', 'Phys_Sci', 'Bio_Sci', 'Sci_Labs', 'Math', 'Arts', 'Amer_Hist',
@@ -300,14 +311,23 @@ for plan in GePlans:
             major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
             major3='ListB', major3_units=3, major3_disciplines=1, major3_courses=1)
 
-        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Elementary Teacher Education-AAT",
+        degreeCompletionReport=degree_report(id=id, first_term=CourseInfo.first_term, major_name="Elementary Teacher Education-AAT",
                       completed_ge=ge_courses_completed, major_units=major_units_list,
                       area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
                       missing_major=missing_course_dict, major_courses=major_course_dict,
                       enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
                       catalog_term=catalog_term,
                       geplan=plan)
-
-    DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
+    # print('outside deg com', degreeCompletionReport)
+    datafilter = DataframeFilter(degreeCompletionReport=degreeCompletionReport)
+    datafilter.build_student_list()
+    total_row_list = datafilter.select_majors()
+    clean_row_list = list()
+    for sub_list in total_row_list:
+        clean_row_list += sub_list
+    print(clean_row_list)
+    top_majors = DegreeCompletionReport.LS_AA_Degrees_df[clean_row_list]
+    top_majors.to_csv('C:/Users/fmixson/Desktop/Top-AAT_LA_Division_Degrees.csv')
+    # DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
     DegreeCompletionReport.LS_AA_Degrees_df.to_csv(
         'C:/Users/fmixson/Desktop/AAT_LA_Division_Degrees.csv')

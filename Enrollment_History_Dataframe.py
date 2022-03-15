@@ -6,8 +6,6 @@ class EnrollmentHistoryDataFrame:
     def __init__(self, enrollment_history_file):
         self.enrollment_history_file = enrollment_history_file
 
-
-
     def create_dataframe(self):
         pd.set_option('display.max_columns', None)
         self.enrollment_history_df = pd.read_csv(self.enrollment_history_file, encoding='Latin')
