@@ -9,6 +9,7 @@ class DegreeCompletionReport:
                'Degree_Major_Units', 'Elective_Units', 'Total_Missing', 'GE_Missing', 'Major_Missing', 'Missing_GE_Courses',
                'Missing_Major_Courses', 'GE_Courses', 'Major_Courses', 'Elective_Courses', 'Enrolled_Courses', 'Passed_Courses']
     LS_AA_Degrees_df = pd.DataFrame(columns=columns)
+    LS_AA_Degrees_df.index.name = 'Rows'
 
     def __init__(self, student_id, first_term, major_name, geplan, completed_ge_courses, major_units, area_units_dict, missing_units, missing_ge,
                  missing_major, major_courses, enrolled_courses, degree_applicable_courses, catalog_term):
@@ -113,20 +114,71 @@ class DataframeFilter():
             row_by_student_list = []
             for i in range(len(self.degreeCompletionReport)):
                 if self.degreeCompletionReport.loc[i, 'Student_ID'] == id:
-                    print('len', len(row_by_student_list))
-                    if len(row_by_student_list)==0:
-                        missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
-                        row_by_student_list.append(i)
-                    else:
-                        if self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[0]:
-                            missing_list.clear()
-                            row_by_student_list.clear()
+
+                    if len(row_by_student_list) < 1:
+                         missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                         row_by_student_list.append(i)
+                    elif len(row_by_student_list) < 2:
+                        if self.degreeCompletionReport.loc[i, 'Total_Missing'] <= missing_list[0]:
+                             missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                             row_by_student_list.insert(0, i)
+                        else:
                             missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
                             row_by_student_list.append(i)
+                    elif len(row_by_student_list) < 3:
+                        if self.degreeCompletionReport.loc[i, 'Total_Missing'] <= missing_list[0]:
+                             missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                             row_by_student_list.insert(1, i)
+                        elif missing_list[0] <= self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[1]:
+                                    missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                                    row_by_student_list.insert(1, i)
+                        else:
+                            missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                            row_by_student_list.append(i)
+
+                    elif len(row_by_student_list) >= 3:
+                        if self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[0]:
+                             missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                             row_by_student_list.insert(1, i)
+                        elif missing_list[0] <= self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[1]:
+                                    missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                                    row_by_student_list.insert(1, i)
+                        elif missing_list[1] <= self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[2]:
+                                    missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                                    row_by_student_list.insert(2, i)
+
+                        # else:
+                        #     missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+                        #     row_by_student_list.append(i)
+
+
+
                     print('id', id, row_by_student_list, missing_list)
-            total_row_list.append(row_by_student_list)
+            rows = row_by_student_list[:3]
+            total_row_list.append(rows)
             print('total', total_row_list)
-            return total_row_list
+
+        #     print('len', len(row_by_student_list))
+        #     if len(row_by_student_list) == 0:
+        #         missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+        #         row_by_student_list.append(i)
+        #     else:
+        #         if self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[0]:
+        #             missing_list.clear()
+        #             row_by_student_list.clear()
+        #             missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
+        #             row_by_student_list.append(i)
+        #     print('id', id, row_by_student_list, missing_list)
+        # total_row_list.append(row_by_student_list)
+        print('total', total_row_list)
+        return total_row_list
+
+    def select_top_majors(self, total_row_list):
+        clean_row_list = []
+        for sub_list in total_row_list:
+            clean_row_list += sub_list
+        print('clean row', clean_row_list)
+        return clean_row_list
 
     # def degree_status(self, length, missing_major_courses):
     #     degree_status_ge = False

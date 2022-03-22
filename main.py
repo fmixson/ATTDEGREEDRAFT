@@ -322,12 +322,15 @@ for plan in GePlans:
     datafilter = DataframeFilter(degreeCompletionReport=degreeCompletionReport)
     datafilter.build_student_list()
     total_row_list = datafilter.select_majors()
-    clean_row_list = list()
-    for sub_list in total_row_list:
-        clean_row_list += sub_list
-    print(clean_row_list)
-    top_majors = DegreeCompletionReport.LS_AA_Degrees_df[clean_row_list]
-    top_majors.to_csv('C:/Users/fmixson/Desktop/Top-AAT_LA_Division_Degrees.csv')
-    # DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
+    clean_row_list=datafilter.select_top_majors(total_row_list=total_row_list)
+    # clean_row_list = []
+    # for sub_list in total_row_list:
+    #     clean_row_list += sub_list
+    # print('clean row', clean_row_list)
     DegreeCompletionReport.LS_AA_Degrees_df.to_csv(
         'C:/Users/fmixson/Desktop/AAT_LA_Division_Degrees.csv')
+    top_majors = DegreeCompletionReport.LS_AA_Degrees_df.filter(clean_row_list, axis=0)
+    top_majors.to_csv('C:/Users/fmixson/Desktop/Top-AAT_LA_Division_Degrees.csv')
+    # DegreeCompletionReport.LS_AA_Degrees_df.sort_values(by=['Total_Missing'], inplace=True, ascending=True)
+    # DegreeCompletionReport.LS_AA_Degrees_df.to_csv(
+    #     'C:/Users/fmixson/Desktop/AAT_LA_Division_Degrees.csv')
