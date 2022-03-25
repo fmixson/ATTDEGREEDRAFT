@@ -318,6 +318,75 @@ for plan in GePlans:
                       enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
                       catalog_term=catalog_term,
                       geplan=plan)
+
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict, major_units_list = major_progress \
+            (degree_applicable_courses=degree_applicable_courses,
+             ge_courses_completed=ge_courses_completed,
+             major_name="Art and Design Studio Arts-AAT",
+             major_course_requirements='AAT_Art_Design.csv',
+             major1='Core', major1_units=15, major1_disciplines=1, major1_courses=5,
+             major2='ListA', major2_units=3, major2_disciplines=1, major2_courses=1,
+             major3='ListB', major3_units=9, major3_disciplines=1, major3_courses=3)
+
+        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Art and Design Studio Arts-AAT",
+                      completed_ge=ge_courses_completed, major_units=major_units_list,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term,
+                      geplan=plan)
+
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict, major_units_list = major_progress \
+            (degree_applicable_courses=degree_applicable_courses,
+             ge_courses_completed=ge_courses_completed,
+             major_name="Political Science-AAT",
+             major_course_requirements='AAT_Pol_Sci.csv',
+             major1='Core', major1_units=3, major1_disciplines=1, major1_courses=1,
+             major2='ListA', major2_units=9, major2_disciplines=1, major2_courses=3,
+             major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=3)
+
+        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Political Science-AAT",
+                      completed_ge=ge_courses_completed, major_units=major_units_list,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term,
+                      geplan=plan)
+
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict, major_units_list = major_progress \
+            (degree_applicable_courses=degree_applicable_courses,
+             ge_courses_completed=ge_courses_completed,
+             major_name="Political Science-AAT",
+             major_course_requirements='AAT_Pol_Sci.csv',
+             major1='Core', major1_units=3, major1_disciplines=1, major1_courses=1,
+             major2='ListA', major2_units=9, major2_disciplines=1, major2_courses=3,
+             major3='ListB', major3_units=6, major3_disciplines=1, major3_courses=3)
+
+        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Political Science-AAT",
+                      completed_ge=ge_courses_completed, major_units=major_units_list,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term,
+                      geplan=plan)
+
+        missing_course_dict, missing_units_dict, major_course_dict, area_units_dict, major_units_list = major_progress \
+            (degree_applicable_courses=degree_applicable_courses,
+             ge_courses_completed=ge_courses_completed,
+             major_name="Mathematics-AST",
+             major_course_requirements='AST_Mathematics.csv',
+             major1='Core', major1_units=18, major1_disciplines=1, major1_courses=1,
+             major2='ListA', major2_units=4, major2_disciplines=1, major2_courses=3,)
+
+        degree_report(id=id, first_term=CourseInfo.first_term, major_name="Mathematics-AAT",
+                      completed_ge=ge_courses_completed, major_units=major_units_list,
+                      area_units_dict=area_units_dict, missing_units=missing_units_dict, missing_ge=missing_ge_courses,
+                      missing_major=missing_course_dict, major_courses=major_course_dict,
+                      enrolled_courses=enrolled_courses, degree_applicable_courses=degree_applicable_courses,
+                      catalog_term=catalog_term,
+                      geplan=plan)
+
+
     # print('outside deg com', degreeCompletionReport)
     datafilter = DataframeFilter(degreeCompletionReport=degreeCompletionReport)
     datafilter.build_student_list()
