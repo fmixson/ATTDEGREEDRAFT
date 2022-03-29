@@ -139,7 +139,7 @@ class DataframeFilter():
                     elif len(row_by_student_list) >= 3:
                         if self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[0]:
                              missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
-                             row_by_student_list.insert(1, i)
+                             row_by_student_list.insert(0, i)
                         elif missing_list[0] <= self.degreeCompletionReport.loc[i, 'Total_Missing'] < missing_list[1]:
                                     missing_list.append(self.degreeCompletionReport.loc[i, 'Total_Missing'])
                                     row_by_student_list.insert(1, i)
